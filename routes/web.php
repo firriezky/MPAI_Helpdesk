@@ -14,14 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/new-ticket', 'TicketController@index');
-Route::get('/check-ticket', 'TicketController@index');
+Route::get('/ticket/new-ticket', 'TicketController@index');
+
+Route::get('/ticket/find/{ticketNum}', 'TicketController@checkTicket');
+
+Route::get('/ticket/find', 'TicketController@findIndex')->name("find-ticket-index");
+Route::get('/ticket/find', 'TicketController@find')->name("find-ticket-ops");
+
+Route::get('/admin/list-ticket', 'TicketController@listIndex')->name("list-ticket");
 
 Route::post('/create-ticket', 'TicketController@create')->name('create-ticket');
 
