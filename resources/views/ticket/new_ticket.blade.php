@@ -121,7 +121,7 @@
                                 <hr>
 
                                 <div class="text-center">
-                                    <a class="small" href="{{ url('check-ticket') }}">
+                                    <a class="small" href="{{ url('ticket/find') }}">
                                         {{ __('Sudah Input Tiket ? Cek Status Tiket Disini') }}
                                     </a>
                                 </div>
