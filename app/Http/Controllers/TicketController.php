@@ -15,6 +15,35 @@ class TicketController extends Controller
         return view("ticket.new_ticket");
     }
 
+    public function fetchAjax(Request $request)
+    {
+        $ticket = Ticket::where('id', $request->id)
+        ->first();
+        return response()->json(
+            $ticket
+        );
+    }
+
+    public function changeStatusAjax(Request $request)
+    {
+        $ticket = Ticket::findOrFail($request->id);
+        $ticket->update([
+            "status" => $request->status
+        ]);
+
+       
+        if ($ticket) {
+            $status = true;
+        }else{
+            $status = false;
+        }
+
+        return response()->json(
+            $status
+        );
+        
+    }
+
     public function findIndex()
     {
         return view("ticket.find_ticket");
@@ -56,7 +85,7 @@ class TicketController extends Controller
         if ($image != "") {
             foreach ($image as $file) {
                 $filename = time() . "-" . $counter . "." . $file->getClientOriginalExtension();
-                $file->move(public_path("ticket/$nim"), $filename);
+                $file->move(public_path("ticketPhoto/$nim"), $filename);
                 array_push($imageArr, $filename);
                 $counter++;
             }

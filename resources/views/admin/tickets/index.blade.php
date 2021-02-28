@@ -13,6 +13,105 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js">
     </script>
 
+    <script>
+        $(document).on('click', '.edit_data', function() {
+            document.getElementById("mStatus").innerHTML = "";
+            document.getElementById("supportPhotoContainer").innerHTML = "";
+            var ticketID = $(this).attr("id");
+            var csrf = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: "{{ url('/ticket/fetch/') }}",
+                method: "POST",
+                data: {
+                    id: ticketID,
+                    '_token': csrf
+                },
+                error: function(ts) {
+                    alert(ts.responseText)
+                }, // or console.log(ts.responseText)
+                success: function(data) {
+                    console.log(data);
+                    let mType = data.ticket_type;
+                    let ticketType = "Unknown Ticket Type";
+
+                    switch (mType) {
+                        case "1":
+                            ticketType = "Reset Password"
+                            break;
+                        case "2":
+                            ticketType = "Laporan Bug/Error"
+                            break;
+                        case "3":
+                            ticketType = "Perbaikan Data/Kesalahan Data"
+                            break;
+                        case "4":
+                            ticketType = "Administrasi"
+                            break;
+                        case "5":
+                            ticketType = "Lain-lain"
+                            break;
+
+                        default:
+                            ticketType = "Unknown Type"
+                            break;
+                    }
+
+                    var fileArray = data.file.split(',');
+                    var nim = data.nid;
+
+                    let mStatus = data.status;
+                    let statusAppend = "";
+
+                    switch (mStatus) {
+                        case "0":
+                            statusAppend =
+                                "<span class='badge badge-info'>Status : Dalam Antrian</span>"
+                            break;
+
+                        case "1":
+                            statusAppend =
+                                '<span class="badge badge-success">Status : Selesai/Solved</span>'
+                            break;
+
+                        case "3":
+                            statusAppend = '<span class="badge badge-warning">Status : Diproses</span>'
+                            break;
+
+                        case "2":
+                            statusAppend =
+                                '<span class="badge badge-danger">Status : Gagal Diproses</span>'
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    document.getElementById("mName").textContent = data.name;
+                    document.getElementById("mClass").textContent = data.class;
+                    document.getElementById("modelHeading").textContent = "Ticket : " + data.ticket_id;
+                    document.getElementById("mNIM").textContent = nim;
+                    document.getElementById("mFaculty").textContent = data.faculty;
+                    document.getElementById("mTicketType").textContent = ticketType;
+                    document.getElementById("mTicketDetail").textContent = data.ticket_detail;
+                    $('#mStatus').append(statusAppend);
+
+                    let fileRoot = "{{ url('/') }}" + "/ticketPhoto/" + nim + "/";
+                    for (const file of fileArray) {
+                        $('#supportPhotoContainer').append(
+                            "<img src='" + fileRoot + file + "' class='img-fluid prev_img'></a>"
+                        );
+                    }
+
+                    console.log(data.id);
+                    console.log(data.name);
+                    console.log(data.class);
+                    console.log(data.faculty);
+                }
+            });
+        });
+
+    </script>
+
 
     <script>
         $('.btn-reset').on('click', function() {
@@ -184,24 +283,31 @@
                                         </td>
                                         <td>
                                             @if ($ticket->status == 0)
-                                                <span class="badge badge-danger">Status : Dalam Antrian</span>
+                                                <span class="badge badge-info">Status : Dalam Antrian</span>
                                             @endif
 
                                             @if ($ticket->status == 1)
                                                 <span class="badge badge-success">Status : Selesai/Solved</span>
                                             @endif
 
+                                            @if ($ticket->status == 2)
+                                                <span class="badge badge-warning">Status : Gagal</span>
+                                            @endif
+
                                             @if ($ticket->status == 3)
                                                 <span class="badge badge-warning">Status : Diproses</span>
-
                                             @endif
                                         </td>
 
-                                        <td>{{$ticket->ticket_type}}</td>
-                                        <td>   <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modelId">
-                                              Lihat Detail
-                                            </button></td>
+                                        <td>{{ $ticket->ticket_type }}</td>
+                                        <td>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" id="{{ $ticket->id }}"
+                                                class="btn btn-primary btn-xs edit_data" data-toggle="modal"
+                                                data-target="#ajaxModel">
+                                                Lihat Detail
+                                            </button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -211,24 +317,84 @@
             </div>
 
 
-         
-            
-            <!-- Modal -->
-            <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+
+
+            <div class="modal fade bd-example-modal-lg" id="ajaxModel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                            <h4 class="modal-title" id="modelHeading"></h4>
                         </div>
                         <div class="modal-body">
-                            Body
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save</button>
+                            <form id="CustomerForm" name="CustomerForm" class="form-horizontal">
+                                <input type="hidden" name="Customer_id" id="Customer_id">
+                                <ul>
+                                    <li>Nama : <span id="mName"></span></li>
+                                    <li>Nomor ID : <span id="mNIM"></span></li>
+                                    <li>Fakultas : <span id="mFaculty"></span></li>
+                                    <li>Kelas : <span id="mClass"></span></li>
+                                    <li>Tipe Ticket : <span id="mTicketType"></span></li>
+                                </ul>
+
+                                <h5>Status Ticket : <strong><span id="mStatus"></span></strong></h5>
+                                <form action="">
+
+                                    <div class="form-group">
+                                        <label for="">Ubah Status Tiket</label>
+                                        <select required class="form-control" name="status" id="">
+                                            <option value="">Ubah Status</option>
+                                            <option value="0">Dalam Antrian</option>
+                                            <option value="1">Selesai</option>
+                                            <option value="2">Gagal</option>
+                                            <option value="3">Diproses</option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-outline-primary mb-2">Simpan Perubahan</button>
+                                </form>
+
+                                <div id="ticketDetailCollapse" role="tablist" aria-multiselectable="true">
+                                    <div class="card">
+                                        <div class="card-header" role="tab" id="section1HeaderId">
+                                            <h5 class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#ticketDetailCollapse"
+                                                    href="#ticketCollapsed" aria-expanded="true"
+                                                    aria-controls="section1ContentId">
+                                                    Detail Tiket ( Klik Untuk Melihat)
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="ticketCollapsed" class="collapse in" role="tabpanel"
+                                            aria-labelledby="section1HeaderId">
+                                            <div class="card-body">
+                                                <h5><strong>Detal Tiket :</strong></h5>
+                                                <span id="mTicketDetail"></span></li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="photoProofCollapse" role="tablist" aria-multiselectable="true">
+                                    <div class="card">
+                                        <div class="card-header" role="tab" id="section1HeaderId">
+                                            <h5 class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#photoProofCollapse"
+                                                    href="#section1ContentId" aria-expanded="true"
+                                                    aria-controls="section1ContentId">
+                                                    Bukti Pendukung
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="section1ContentId" class="collapse in" role="tabpanel"
+                                            aria-labelledby="section1HeaderId">
+                                            <div class="card-body">
+                                                <div class="container row" id="supportPhotoContainer"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

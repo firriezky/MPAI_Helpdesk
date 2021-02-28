@@ -24,6 +24,8 @@ Route::get('/ticket/new-ticket', 'TicketController@index');
 
 Route::get('/ticket/find/{ticketNum}', 'TicketController@checkTicket');
 
+Route::post('/ticket/fetch', 'TicketController@fetchAjax');
+
 Route::get('/ticket/find', 'TicketController@findIndex')->name("find-ticket-index");
 Route::get('/ticket/find', 'TicketController@find')->name("find-ticket-ops");
 
