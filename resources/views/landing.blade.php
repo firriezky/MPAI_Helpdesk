@@ -37,6 +37,15 @@
                                             </span>
                                             <span class="text">Cek Status Ticket</span>
                                         </a>
+                                    </div>       
+
+                                      <div class="col-12 col-lg-12">
+                                        <a href="{{url("/ticket/new-ticket")}}" class="btn btn-warning btn-block btn-icon-split mt-3 ">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-flag"></i>
+                                            </span>
+                                            <span class="text">Kritik & Saran Badan Mentoring</span>
+                                        </a>
                                     </div>                                  
                                 </div>
 
