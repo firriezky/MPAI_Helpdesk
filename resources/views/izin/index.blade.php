@@ -83,7 +83,7 @@
 
                                     <div class="form-group">
                                         <label for="">Detail Perizinan : </label>
-                                        <textarea class="form-control" required name="detail" id="" rows="5" placeholder="Masukkan Detail Ticket/Keluhan Anda">{{ old('detail') }}</textarea>
+                                        <textarea class="form-control" required name="detail" id="" rows="5" placeholder="Masukkan Detail Perizinan">{{ old('detail') }}</textarea>
                                     </div>
 
                                     <div class="form-group">
