@@ -33,6 +33,9 @@ Route::get('/admin/list-ticket', 'TicketController@listIndex')->name("list-ticke
 
 Route::post('/create-ticket', 'TicketController@create')->name('create-ticket');
 
+Route::get('/perizinan/input', 'IzinController@index');
+Route::post('/perizinan/store', 'IzinController@store')->name('input-izin');
+
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
 
