@@ -52,10 +52,10 @@
                                         <label for="">Fakultas Asal : </label>
                                         <select required class="form-control" name="faculty" id="">
                                             <option value="FRI">FAKULTAS REKAYASA INDUSTRI</option>
+                                            <option value="FIK">FAKULTAS INDUSTRI KREATIF</option>
                                             <option value="FIT">FAKULTAS ILMU TERAPAN</option>
                                             <option value="FTE">FAKULTAS TEKNIK ELEKTRO</option>
                                             <option value="FKEB">FAKULTAS EKONOMI DAN BISNIS</option>
-                                            <option value="FIF">FAKULTAS INDUSTRI KREATIF</option>
                                         </select>
                                     </div>
 
