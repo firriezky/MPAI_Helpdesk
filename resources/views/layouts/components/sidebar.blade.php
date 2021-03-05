@@ -42,6 +42,13 @@
             </a>
         </li>
 
+        <li class="nav-item  {{ (Request::is('admin/agenda/create')) ? 'active' : ''}}">
+            <a class="nav-link" href="{{ url('admin/agenda/create') }}">
+                <i class="fas fa-sign-in" aria-hidden="true"></i>
+                <span>Buat Agenda</span>
+            </a>
+        </li>
+
         <!-- Nav Item - About -->
         <li class="nav-item {{ Nav::isRoute('about') }}">
             <a class="nav-link" href="{{ route('about') }}">
