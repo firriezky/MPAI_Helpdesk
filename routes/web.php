@@ -36,6 +36,12 @@ Route::post('/create-ticket', 'TicketController@create')->name('create-ticket');
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
 
+Route::prefix('admin')->group(function(){
+
+    Route::get('agenda/create','AgendaController@adminCreateIndex');
+
+});
+
 Route::get('/about', function () {
     return view('about');
 })->name('about');
