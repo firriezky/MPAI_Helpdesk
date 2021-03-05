@@ -56,6 +56,7 @@
                                             <option value="FIT">FAKULTAS ILMU TERAPAN</option>
                                             <option value="FTE">FAKULTAS TEKNIK ELEKTRO</option>
                                             <option value="FKEB">FAKULTAS EKONOMI DAN BISNIS</option>
+                                            <option value="FIF">FAKULTAS INFORMATIKA</option>
                                         </select>
                                     </div>
 
