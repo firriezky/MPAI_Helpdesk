@@ -18,13 +18,13 @@ class CreateAgendasTable extends Migration
             $table->timestamps();
             $table->string('judul');
             $table->integer('tipe'); // 1 = mentoring, 2 = general, 3 = talaqi, 4 = tugas besar
+            $table->integer('status'); // 1 = mentoring, 2 = general, 3 = talaqi, 4 = tugas besar
             $table->dateTime('tanggal_akhir');
-
             // for general & talaqi only
             $table->string('materi')->nullable();
             $table->string('tempat')->nullable();
 
-            
+
         });
     }
 
