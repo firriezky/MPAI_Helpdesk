@@ -66,6 +66,7 @@
                                             <option value="1">Asisten MPAI / Kakak Mentor</option>
                                             <option value="2">Mahasiswa / Mentee</option>
                                             <option value="3">Dosen</option>
+                                            <option value="4">Pengurus Badan Mentoring</option>
                                         </select>
                                     </div>
 
