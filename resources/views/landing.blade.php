@@ -94,6 +94,19 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12 mt-4">
+                                        <h4>Input Kehadiran</h4>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12 ">
+                                            <a href="{{ url('presensi/input') }}"
+                                                class="btn btn-border border-primary btn-block btn-icon-split mt-3 ">
+                                                <span class="text">Input Kehadiran</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
 
                                     <div class="col-12 mt-5">
                                         <h4>Cek Data</h4>
