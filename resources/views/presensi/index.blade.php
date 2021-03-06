@@ -55,7 +55,8 @@
                                             <option value="FIK">FAKULTAS INDUSTRI KREATIF</option>
                                             <option value="FIT">FAKULTAS ILMU TERAPAN</option>
                                             <option value="FTE">FAKULTAS TEKNIK ELEKTRO</option>
-                                            <option value="FKEB">FAKULTAS EKONOMI DAN BISNIS</option>
+                                            <option value="FEB">FAKULTAS EKONOMI BISNIS</option>
+                                            <option value="FKB">FAKULTAS KOMUNIKASI DAN BISNIS</option>
                                             <option value="FIF">FAKULTAS INFORMATIKA</option>
                                         </select>
                                     </div>
