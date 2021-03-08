@@ -24,6 +24,37 @@ class TicketController extends Controller
         );
     }
 
+    public function fetchAllAjax(Request $request)
+    {
+        $ticket = Ticket::latest()->get();
+        
+        return response()->json([
+            "recordsTotal" => count($ticket) ,
+            "ticket" => ($ticket) ,
+        ]
+        );
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $status=false;
+        $ticket = Ticket::findOrFail($request->id);
+
+        $ticket->status=$request->newStatus;
+        $ticket->answers_ticket=$request->newAnswer;
+        $ticket->save();
+
+        if($ticket){
+            $status=true;
+        }
+
+        return response()->json([
+            "status"=>$status,
+            "request"=>$request->all()
+            ]
+        );
+    }
+
     public function changeStatusAjax(Request $request)
     {
         $ticket = Ticket::findOrFail($request->id);
