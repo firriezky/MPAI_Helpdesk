@@ -25,6 +25,8 @@ Route::get('/ticket/new-ticket', 'TicketController@index');
 Route::get('/ticket/find/{ticketNum}', 'TicketController@checkTicket');
 
 Route::post('/ticket/fetch', 'TicketController@fetchAjax');
+Route::post('/ticket/change-status', 'TicketController@changeStatus');
+Route::get('/ticket/fetchAll', 'TicketController@fetchAllAjax');
 
 Route::get('/ticket/find', 'TicketController@findIndex')->name("find-ticket-index");
 Route::get('/ticket/find', 'TicketController@find')->name("find-ticket-ops");
@@ -34,7 +36,9 @@ Route::get('/admin/list-ticket', 'TicketController@listIndex')->name("list-ticke
 Route::post('/create-ticket', 'TicketController@create')->name('create-ticket');
 
 Route::get('/perizinan/input', 'IzinController@index');
+
 Route::get('/presensi/input', 'PresensiController@index');
+Route::post('/presensi/getAjax', 'PresensiController@getAjax');
 
 Route::post('/perizinan/store', 'IzinController@store')->name('input-izin');
 Route::post('/presensi/store', 'PresensiController@store')->name('input-presensi');
@@ -45,6 +49,7 @@ Route::put('/profile', 'ProfileController@update')->name('profile.update');
 Route::prefix('admin')->group(function(){
 
     Route::get('agenda/create','AgendaController@adminCreateIndex');
+    Route::get('presensi/check','PresensiController@indexAdmin');
 
 });
 

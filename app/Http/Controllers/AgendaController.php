@@ -10,7 +10,6 @@ class AgendaController extends Controller
 {
     public function adminCreateIndex(){
         $agendas = Agenda::count();
-
         $widget = [
             'agendas' => $agendas,
             //...

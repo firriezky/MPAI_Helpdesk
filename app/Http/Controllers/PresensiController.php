@@ -9,10 +9,23 @@ use Illuminate\Http\Request;
 
 class PresensiController extends Controller
 {
-    public function index(){
+    public function indexAdmin(){
         $agendas = Agenda::all();
-        return view ('presensi.index')->with(compact('agendas'));
+        $widget = [
+            'agendas' => $agendas,
+            //...
+        ];
+        return view ('admin.presensi.check')->with(compact('widget'));
     }
+
+
+    public function getAjax(Request $request){
+        $presensi = Presensi::where('agenda_id', $request->id)->get();
+        return response()->json(
+            $presensi
+        );
+    }
+
 
     public function store(Request $request)
     {

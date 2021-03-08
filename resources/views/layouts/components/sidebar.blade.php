@@ -49,6 +49,13 @@
             </a>
         </li>
 
+        <li class="nav-item  {{ (Request::is('admin/presensi/check')) ? 'active' : ''}}">
+            <a class="nav-link" href="{{ url('admin/presensi/check') }}">
+                <i class="fas fa-sign-in" aria-hidden="true"></i>
+                <span>Lihat Presensi</span>
+            </a>
+        </li>
+
         <!-- Nav Item - About -->
         <li class="nav-item {{ Nav::isRoute('about') }}">
             <a class="nav-link" href="{{ route('about') }}">
