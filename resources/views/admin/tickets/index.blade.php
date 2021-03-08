@@ -128,7 +128,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                             </tbody>
                         </table>
                     </div>
@@ -294,6 +294,12 @@
                     id: ticketID,
                     '_token': csrf
                 },
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+                complete: function() {
+                    $('#loader').hide();
+                },
                 error: function(ts) {
                     alert(ts.responseText)
                 }, // or console.log(ts.responseText)
@@ -421,6 +427,12 @@
                         'newStatus': newStatus,
                         'newAnswer': mNewAnswer,
                     },
+                    beforeSend: function() {
+                        $('#loader').show();
+                    },
+                    complete: function() {
+                        $('#loader').hide();
+                    },
                     error: function(ts) {
                         alert(ts.responseText)
                     }, // or console.log(ts.responseText)
@@ -462,10 +474,17 @@
                     'excelHtml5',
                     'csvHtml5',
                 ],
+
                 "ajax": {
-                    "url": "{{ url('/ticket/fetchAll') }}",
-                    "type": "GET",
-                    "dataSrc": "ticket"
+                    url: "{{ url('/ticket/fetchAll') }}",
+                    type: "GET",
+                    dataSrc: "ticket",
+                    beforeSend: function() {
+                        $('#loader').show();
+                    },
+                    complete: function() {
+                        $('#loader').hide();
+                    },
                 },
                 "columns": [{
                         data: 'id'
