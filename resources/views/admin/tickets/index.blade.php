@@ -113,7 +113,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive dataTables_wrapper dt-bootstrap4">
-                        <table id="dataTable" class="table  ">
+                        <table id="dataTable" class="table  w-100">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -128,54 +128,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($tickets as $ticket)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $ticket->nid }}</td>
-                                        <td>{{ $ticket->name }}</td>
-                                        <td>{{ $ticket->faculty }}</td>
-                                        <td>{{ $ticket->class }}</td>
-                                        <td>
-                                            @if ($ticket->account_type == 1)
-                                                Mentor
-                                            @endif
-                                            @if ($ticket->account_type == 2)
-                                                Mahasiswa / Mentee
-                                            @endif
-                                            @if ($ticket->account_type == 3)
-                                                Dosen
-                                            @endif
-
-                                        </td>
-                                        <td>
-                                            @if ($ticket->status == 0)
-                                                <span class="badge badge-info">Status : Dalam Antrian</span>
-                                            @endif
-
-                                            @if ($ticket->status == 1)
-                                                <span class="badge badge-success">Status : Selesai/Solved</span>
-                                            @endif
-
-                                            @if ($ticket->status == 2)
-                                                <span class="badge badge-warning">Status : Gagal</span>
-                                            @endif
-
-                                            @if ($ticket->status == 3)
-                                                <span class="badge badge-warning">Status : Diproses</span>
-                                            @endif
-                                        </td>
-
-                                        <td>{{ $ticket->ticket_type }}</td>
-                                        <td>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" id="{{ $ticket->id }}"
-                                                class="btn btn-primary btn-xs edit_data" data-toggle="modal"
-                                                data-target="#ajaxModel">
-                                                Lihat Detail
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach --}}
+                               
                             </tbody>
                         </table>
                     </div>
@@ -201,6 +154,7 @@
                                     <li>Kelas : <span id="mClass"></span></li>
                                     <li>Tipe Ticket : <span id="mTicketType"></span></li>
                                     <li>Jenis Akun : <span id="mAccountType"></span></li>
+                                    <li>Preferensi Jawaban : <span id="mAnswerPref"></span></li>
                                 </ul>
 
                                 <h5>Status Ticket : <strong><span id="mStatus"></span></strong></h5>
@@ -420,6 +374,7 @@
                             break;
                     }
 
+                    document.getElementById("mAnswerPref").textContent = data.answers_pref;
                     document.getElementById("mName").textContent = data.name;
                     document.getElementById("answerChange").value = data.answers_ticket;
                     document.getElementById("mAccountType").textContent = accountType;
