@@ -31,7 +31,7 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pilih Agenda Presensi
                             </div>
                             <div class="form-group">
-                                <select class="form-control" onchange="populateTable()" name="" id="listAgenda">
+                                <select class="form-control" onchange="populateTable();" name="" id="listAgenda">
                                     @foreach ($widget['agendas'] as $item)
                                         <option value="{{ $item->id }}">{{ $item->judul }}</option>
                                     @endforeach
@@ -59,41 +59,28 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive dataTables_wrapper dt-bootstrap4">
-                        <table id="tablePresensi" class="table  ">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>NIM</th>
-                                    <th>Nama</th>
-                                    <th>Fakultas</th>
-                                    <th>Kelas</th>
-                                    <th>Akun</th>
-                                    <th>Status</th>
-                                    <th>Type</th>
-                                    <th>Detail</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
+                        <div class="table-responsive">
+                            <table id="tablePresensi" class="table w-100">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>NIM</th>
+                                        <th>Nama</th>
+                                        <th>Fakultas</th>
+                                        <th>Kelas</th>
+                                        <th>Akun</th>
+                                        <th>Jam Hadir</th>
+                                        <th>Type</th>
+                                        <th>Bukti Hadir</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
 
-                                    </td>
-                                    <td>
-
-                                    </td>
-
-                                    <td></td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -207,56 +194,133 @@
 
 @section('js-addons')
     <script>
-        let populateTable = () => {
-            $("#tablePresensi").find("tr:gt(0)").remove();
+        populateTable = () => {
             let csrf = $('meta[name="csrf-token"]').attr('content');
             let agendaSelect = document.getElementById("listAgenda");
             let agendaID = agendaSelect.options[agendaSelect.selectedIndex].value;
-            $.ajax({
-                type: "POST",
-                url: "{{ url('presensi/getAjax') }}",
-                dataType: "json",
-                data: {
-                    id: agendaID,
-                    _token: csrf
+            $('#tablePresensi').DataTable({
+                serverSide: false,
+                "bDestroy": true,
+                dom: 'lrtipB',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                ],
+
+                "ajax": {
+                    url: "{{ url('presensi/getAjax') }}",
+                    type: "GET",
+                    dataSrc: "presensi",
+                    data: {
+                        id: agendaID,
+                        _token: csrf
+                    },
+                    beforeSend: function() {
+                        $('#loader').show();
+                    },
+                    complete: function() {
+                        $('#loader').hide();
+                    },
                 },
-                success: function(data) {
-                    console.log(data);
-                    var len = data.length;
-                    let accountTypeDisplay = "Unknown";
-                    for (var i = 0; i < len; i++) {
-                        switch (parseInt(data[i].account_type)) {
-                            case 1:
-                                accountTypeDisplay = "Mentor"
-                                break;
-                            case 2:
-                                accountTypeDisplay = "Mentee"
-                                break;
-                            case 3:
-                                accountTypeDisplay = "Dosen"
-                                break;
-                            case 4:
-                                accountTypeDisplay = "Pengurus"
-                                break;
 
-                            default:
-                                break;
+                "columns": [{
+                        data: 'id'
+                    },
+                    {
+                        data: 'nim'
+                    },
+                    {
+                        data: 'name'
+                    },
+                    {
+                        data: 'fakultas'
+                    },
+                    {
+                        data: 'class'
+                    },
+                    {
+                        render: function(datum, type, row) {
+                            switch (row.account_type) {
+                                case "1":
+                                    return "Mentor"
+                                    break;
+                                case "2":
+                                    return "Mentee"
+                                    break;
+                                case "3":
+                                    return "Dosen"
+                                    break;
+                                case "4":
+                                    return "Pengurus"
+                                    break;
+                                default:
+                                    return "Unknown Account Type"
+                                    break;
+                            }
+
                         }
+                    },
+                    {
+                        data: 'created_at'
+                    },
+                    {
+                        data: 'fakultas'
+                    },
 
-                        $("#tablePresensi").append(
-                            "<tr>" +
-                            "<td>" + (i + 1).toString() + "</td>" +
-                            "<td>" + data[i].nim + "</td>" +
-                            "<td>" + data[i].name + "</td>" +
-                            "<td>" + data[i].fakultas + "</td>" +
-                            "<td>" + data[i].class + "</td>" +
-                            "<td>" + accountTypeDisplay + "</td>" +
-                            "</tr>"
-                        );
-                    }
-                }
-
+                ]
             });
+
+            // $("#tablePresensi").find("tr:gt(0)").remove();
+            // let agendaSelect = document.getElementById("listAgenda");
+            // let agendaID = agendaSelect.options[agendaSelect.selectedIndex].value;
+            // $.ajax({
+            //     type: "POST",
+            //     url: "{{ url('presensi/getAjax') }}",
+            //     dataType: "json",
+            //     data: {
+            //         id: agendaID,
+            //         _token: csrf
+            //     },
+            //     beforeSend: function() {
+            //         $('#loader').show();
+            //     },
+            //     complete: function() {
+            //         $('#loader').hide();
+            //     },
+            //     success: function(data) {
+            //         console.log(data);
+            //         var len = data.length;
+            //         let accountTypeDisplay = "Unknown";
+            //         for (var i = 0; i < len; i++) {
+            //             switch (parseInt(data[i].account_type)) {
+            //                 case 1:
+            //                     accountTypeDisplay = "Mentor"
+            //                     break;
+            //                 case 2:
+            //                     accountTypeDisplay = "Mentee"
+            //                     break;
+            //                 case 3:
+            //                     accountTypeDisplay = "Dosen"
+            //                     break;
+            //                 case 4:
+            //                     accountTypeDisplay = "Pengurus"
+            //                     break;
+
+            //                 default:
+            //                     break;
+            //             }
+
+            //             $("#tablePresensi").append(
+            //                 "<tr>" +
+            //                 "<td>" + (i + 1).toString() + "</td>" +
+            //                 "<td>" + data[i].nim + "</td>" +
+            //                 "<td>" + data[i].name + "</td>" +
+            //                 "<td>" + data[i].fakultas + "</td>" +
+            //                 "<td>" + data[i].class + "</td>" +
+            //                 "<td>" + accountTypeDisplay + "</td>" +
+            //                 "</tr>"
+            //             );
         }
 
     </script>
@@ -272,14 +336,7 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js">
     </script>
     <script>
-        $('#tablePresensi').DataTable({
-            dom: 'lrtipB',
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-            ]
-        });
+
 
     </script>
 @endsection

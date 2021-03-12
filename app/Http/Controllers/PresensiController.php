@@ -13,7 +13,6 @@ class PresensiController extends Controller
         $agendas = Agenda::all();
         $widget = [
             'agendas' => $agendas,
-            //...
         ];
         return view ('admin.presensi.check')->with(compact('widget'));
     }
@@ -21,9 +20,27 @@ class PresensiController extends Controller
 
     public function getAjax(Request $request){
         $presensi = Presensi::where('agenda_id', $request->id)->get();
-        return response()->json(
-            $presensi
-        );
+        if($request->id == null){
+        $presensi = Presensi::all();
+        }
+
+        $object = array();
+
+        foreach ($presensi as $row) {
+            $agenda = Agenda::findOrFail($row['agenda_id']);
+            $title = rawurlencode($agenda->judul); 
+            $object["presensi"]=[
+                "id" => $row['id'],                
+                "name" => $row['id'],                
+                "nim" => $row['id'],                
+                "fakultas" => $row['id'],                
+                "class" => $row['id'],                
+                "feedback" => $row['id'],
+                "photo" =>  url('/')."/public/presensi/".$title."/".$row['nim']."/".$row['photo']               
+            ];
+        }
+
+        return $object;
     }
 
 
