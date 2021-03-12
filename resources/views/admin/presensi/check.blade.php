@@ -69,8 +69,8 @@
                                         <th>Fakultas</th>
                                         <th>Kelas</th>
                                         <th>Akun</th>
+                                        <th>Feedback</th>
                                         <th>Jam Hadir</th>
-                                        <th>Type</th>
                                         <th>Bukti Hadir</th>
                                     </tr>
                                 </thead>
@@ -262,65 +262,22 @@
                         }
                     },
                     {
+                        data: 'feedback'
+                    },
+                    {
                         data: 'created_at'
                     },
                     {
-                        data: 'fakultas'
+                        render : function(datum,type,row){
+                        let html = "<a href='"+row.photo+"'>Link</a>"
+                        return html
+                        }
                     },
 
                 ]
             });
 
-            // $("#tablePresensi").find("tr:gt(0)").remove();
-            // let agendaSelect = document.getElementById("listAgenda");
-            // let agendaID = agendaSelect.options[agendaSelect.selectedIndex].value;
-            // $.ajax({
-            //     type: "POST",
-            //     url: "{{ url('presensi/getAjax') }}",
-            //     dataType: "json",
-            //     data: {
-            //         id: agendaID,
-            //         _token: csrf
-            //     },
-            //     beforeSend: function() {
-            //         $('#loader').show();
-            //     },
-            //     complete: function() {
-            //         $('#loader').hide();
-            //     },
-            //     success: function(data) {
-            //         console.log(data);
-            //         var len = data.length;
-            //         let accountTypeDisplay = "Unknown";
-            //         for (var i = 0; i < len; i++) {
-            //             switch (parseInt(data[i].account_type)) {
-            //                 case 1:
-            //                     accountTypeDisplay = "Mentor"
-            //                     break;
-            //                 case 2:
-            //                     accountTypeDisplay = "Mentee"
-            //                     break;
-            //                 case 3:
-            //                     accountTypeDisplay = "Dosen"
-            //                     break;
-            //                 case 4:
-            //                     accountTypeDisplay = "Pengurus"
-            //                     break;
-
-            //                 default:
-            //                     break;
-            //             }
-
-            //             $("#tablePresensi").append(
-            //                 "<tr>" +
-            //                 "<td>" + (i + 1).toString() + "</td>" +
-            //                 "<td>" + data[i].nim + "</td>" +
-            //                 "<td>" + data[i].name + "</td>" +
-            //                 "<td>" + data[i].fakultas + "</td>" +
-            //                 "<td>" + data[i].class + "</td>" +
-            //                 "<td>" + accountTypeDisplay + "</td>" +
-            //                 "</tr>"
-            //             );
+     
         }
 
     </script>
@@ -340,3 +297,4 @@
 
     </script>
 @endsection
+
