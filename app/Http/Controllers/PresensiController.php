@@ -29,14 +29,16 @@ class PresensiController extends Controller
         foreach ($presensi as $row) {
             $agenda = Agenda::findOrFail($row['agenda_id']);
             $title = rawurlencode($agenda->judul); 
-            $object["presensi"]=[
+            $object["presensi"][]=[
                 "id" => $row['id'],                
-                "name" => $row['id'],                
-                "nim" => $row['id'],                
-                "fakultas" => $row['id'],                
-                "class" => $row['id'],                
-                "feedback" => $row['id'],
-                "photo" =>  url('/')."/public/presensi/".$title."/".$row['nim']."/".$row['photo']               
+                "name" => $row['name'],                
+                "nim" => $row['nim'],                
+                "fakultas" => $row['fakultas'],                
+                "class" => $row['class'],                
+                "feedback" => $row['feedback'],
+                "account_type" => $row['account_type'],
+                "created_at" => $row['created_at'],
+                "photo" =>  url('/')."/presensi/".$title."/".$row['nim']."/".$row['photo']               
             ];
         }
 
