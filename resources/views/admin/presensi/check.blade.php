@@ -195,6 +195,7 @@
 @section('js-addons')
     <script>
         populateTable = () => {
+            counter=0;
             let csrf = $('meta[name="csrf-token"]').attr('content');
             let agendaSelect = document.getElementById("listAgenda");
             let agendaID = agendaSelect.options[agendaSelect.selectedIndex].value;
@@ -225,7 +226,10 @@
                 },
 
                 "columns": [{
-                        data: 'id'
+                        render: function(datum, type, row) {
+                            counter++;
+                            return counter;
+                        }
                     },
                     {
                         data: 'nim'
@@ -268,16 +272,16 @@
                         data: 'created_at'
                     },
                     {
-                        render : function(datum,type,row){
-                        let html = "<a href='"+row.photo+"'>Link</a>"
-                        return html
+                        render: function(datum, type, row) {
+                            let html = "<a href='" + row.photo + "'>Link</a>"
+                            return html
                         }
                     },
 
                 ]
             });
 
-     
+
         }
 
     </script>
@@ -297,4 +301,3 @@
 
     </script>
 @endsection
-
