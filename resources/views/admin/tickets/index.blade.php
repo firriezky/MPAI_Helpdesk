@@ -129,7 +129,6 @@
                             </thead>
                             <tbody>
 
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -466,6 +465,7 @@
         });
 
         $(function() {
+            
             $('#dataTable').DataTable({
                 serverSide: false,
                 dom: 'lrtipB',

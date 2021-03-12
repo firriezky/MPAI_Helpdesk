@@ -38,7 +38,7 @@ Route::post('/create-ticket', 'TicketController@create')->name('create-ticket');
 Route::get('/perizinan/input', 'IzinController@index');
 
 Route::get('/presensi/input', 'PresensiController@index');
-Route::post('/presensi/getAjax', 'PresensiController@getAjax');
+Route::get('/presensi/getAjax', 'PresensiController@getAjax');
 
 Route::post('/perizinan/store', 'IzinController@store')->name('input-izin');
 Route::post('/presensi/store', 'PresensiController@store')->name('input-presensi');

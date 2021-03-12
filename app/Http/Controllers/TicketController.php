@@ -27,6 +27,10 @@ class TicketController extends Controller
     public function fetchAllAjax(Request $request)
     {
         $ticket = Ticket::latest()->get();
+
+        foreach ($ticket as $item) {
+            # code...
+        }
         
         return response()->json([
             "recordsTotal" => count($ticket) ,
