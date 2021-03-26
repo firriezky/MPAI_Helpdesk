@@ -40,7 +40,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="">Agenda : </label>
+                                        <label for="">Agenda (Pilih Agenda dengan kata 'Perizinan') : </label>
                                         <select required class="form-control" name="agenda_id" id="">
                                             @foreach ($agendas as $item)
                                             <option value="{{$item->id}}">{{$item->judul}}</option>
@@ -55,7 +55,8 @@
                                             <option value="FIK">FAKULTAS INDUSTRI KREATIF</option>
                                             <option value="FIT">FAKULTAS ILMU TERAPAN</option>
                                             <option value="FTE">FAKULTAS TEKNIK ELEKTRO</option>
-                                            <option value="FKEB">FAKULTAS EKONOMI DAN BISNIS</option>
+                                            <option value="FEB">FAKULTAS EKONOMI DAN BISNIS</option>
+                                            <option value="FKEB">FAKULTAS KOMUNIKASI BISNIS</option>
                                             <option value="FIF">FAKULTAS INFORMATIKA</option>
                                         </select>
                                     </div>

@@ -22,7 +22,7 @@ class PresensiController extends Controller
         $widget = [
             'agendas' => $agendas,
         ];
-        return view ('admin.presensi.check')->with(compact('widget'));
+        return view ('presensi.index')->with(compact('widget','agendas'));
     }
 
 

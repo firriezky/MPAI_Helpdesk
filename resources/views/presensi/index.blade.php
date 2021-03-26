@@ -36,7 +36,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" name="class" placeholder="{{ __('Asal Kelas') }}" value="{{ old('class') }}" required>
+                                        <input type="text" class="form-control form-control-user" name="class" placeholder="{{ __('Asal Kelas Di Telkom University (Misal : SI4206)') }}" value="{{ old('class') }}" required>
                                     </div>
 
                                     <div class="form-group">
