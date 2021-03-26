@@ -17,6 +17,14 @@ class PresensiController extends Controller
         return view ('admin.presensi.check')->with(compact('widget'));
     }
 
+    public function index(){
+        $agendas = Agenda::all();
+        $widget = [
+            'agendas' => $agendas,
+        ];
+        return view ('admin.presensi.check')->with(compact('widget'));
+    }
+
 
     public function getAjax(Request $request){
         $presensi = Presensi::where('agenda_id', $request->id)->get();

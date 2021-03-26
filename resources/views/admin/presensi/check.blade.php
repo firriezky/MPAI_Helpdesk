@@ -225,7 +225,8 @@
                     },
                 },
 
-                "columns": [{
+                "columns": [
+                    {
                         render: function(datum, type, row) {
                             counter++;
                             return counter;
